@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGT SmartRecord App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://github.com/Tunnox/Images/blob/main/Home.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        header, footer {
+            text-align: center;
+            margin: 20px 0;
+            color: white;
+        }
+        section {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 600px;
+            color: white;
+        }
+        h1, h2 {
+            color: #fff;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"], input[type="email"], input[type="number"], input[type="date"] {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        select {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            background-color: rgb(1, 44, 173);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: rgb(76, 91, 174);
+        }
+        .create-record-btn {
+            background-color: #007BFF; /* Blue color */
+            padding: 10px 20px; /* More padding for a better look */
+            border: none;
+            border-radius: 4px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0; /* Spacing above and below */
+        }
+        .create-record-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .submit-btn {
+            background-color: #007BFF; /* Blue color for submit button */
+            padding: 10px 20px; /* Padding for better appearance */
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px; /* Space above the button */
+            font-size: 16px; /* Font size for better readability */
+        }
+        .submit-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: rgb(1, 44, 173);
+            color: white;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-image: url('https://github.com/Tunnox/Images/blob/main/TechBlackBK.jpg?raw=true'); /* Background image */
+            background-size: cover; /* Cover the entire modal */
+            background-position: center; /* Center the image */
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */
+            color: white; /* Text color */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><img src="https://github.com/Tunnox/Images/blob/main/newlogo.png?raw=true" alt="SmartRecord Logo" style="height: 50px; vertical-align: middle;"> SmartRecord App</h1>
+        <h3>Amazing Grace Tebarnacle Sheffield</h3>
+        <p>App to manage details of members and volunteers in line with the UK GDPR. For More inofrmation please contact Admin at xyd@gmail.com</p>
+    </header>
+    <button class="create-record-btn" id="openModal">Create New Record</button>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h1>Amazing Grace Tebarnacle Sheffield</h1>
+            <h2>Data Entry Form</h2>
+            <p>Thank you for being part of the AGT Family. Please use this form to add your details to AGT data records.</p>
+            <form action="/insert" method="POST">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="date_of_birth">Date of Birth:</label>
+                <input type="date" id="date_of_birth" name="date_of_birth" required>
+
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="mobile_number">Mobile Number:</label>
+                <input type="text" id="mobile_number" name="mobile_number" required>
+
+                <label for="status">Status:</label>
+                <input type="text" id="status" name="status" required>
+
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" required>
+
+                <label for="relationship_status">Relationship Status:</label>
+                <input type="text" id="relationship_status" name="relationship_status" required>
+
+                <label for="employment_status">Employment Status:</label>
+                <input type="text" id="employment_status" name="employment_status" required>
+
+                <label for="consent">I consent to RCCG AGT Sheffield storing and processing my information in accordance with the UK GDPR <input type="checkbox" id="consent" name="consent" value="Yes"></label>
+
+                <input type="submit" class="submit-btn" value="Submit"> <!-- Updated submit button -->
+            </form>
+        </div>
+    </div>
+
+    <section id="search-data">
+        <h2>Search Records</h2>
+        <form action="/search" method="POST">
+            <input type="text" name="keyword" placeholder="Enter keyword..." required>
+            <button type="submit">Search</button>
+        </form>
+        <div id="search-results">
+            {% if results %}
+                <select id="name-dropdown">
+                    <option value="">Select a name</option>
+                    {% for record in results %}
+                        <option value="{{ record[2] }} {{ record[3] }}">{{ record[2] }} {{ record[3] }}</option>
+                    {% endfor %}
+                </select>
+                <button id="get-details">Get Details</button>
+                <div id="details">
+                    {% if details %} 
+                        <table> 
+                            <tr>
+                                <th>Title</th><td>{{ details[1] }}</td>
+                            </tr>
+                            <tr>
+                                <th>First Name</th><td>{{ details[2] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th><td>{{ details[3] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Age</th><td>{{ details[4] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Gender</th><td>{{ details[5] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date of Birth</th><td>{{ details[6] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Address</th><td>{{ details[7] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th><td>{{ details[8] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Mobile Number</th><td>{{ details[9] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th><td>{{ details[10] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Department</th><td>{{ details[11] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Relationship Status</th><td>{{ details[12] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Employment Status</th><td>{{ details[13] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Consent</th><td>{{ details[14] }}</td>
+                            </tr>
+                        </table> 
+                    {% endif %} 
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section id="update-tables">
+        <h2>Update Records</h2>
+        <form action="/update" method="POST">
+            <input type="text" name="id" placeholder="Record ID" required>
+            <input type="text" name="title" placeholder="Title">
+            <input type="text" name="first_name" placeholder="First Name">
+            <input type="text" name="last_name" placeholder="Last Name">
+            <input type="number" name="age" placeholder="Age">
+            <input type="text" name="gender" placeholder="Gender">
+            <input type="date" name="DATE_OF_BIRTH" placeholder="Date of Birth">
+            <input type="text" name="ADDRESS" placeholder="Address">
+            <input type="email" name="EMAIL" placeholder="Email">
+            <input type="text" name="MOBILE_NUMBER" placeholder="Mobile Number">
+            <input type="text" name="STATUS" placeholder="Status">
+            <input type="text" name="DEPARTMENT" placeholder="Department">
+            <input type="text" name="RELATIONSHIP_STATUS" placeholder="Relationship Status">
+            <input type="text" name="EMPLOYMENT_STATUS" placeholder="Employment Status">
+            <input type="text" name="CONSENT" placeholder="Consent">
+            <button type="submit">Update Record</button>
+        </form>
+    </section>
+
+    <script>
+        document.getElementById('get-details').onclick = function() {
+            const fullName = document.getElementById('name-dropdown').value;
+            if (fullName) {
+                fetch('/get_details', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ full_name: fullName }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('details').innerHTML = `
+                        <h3>Details:</h3>
+                        <table>
+                            <tr><th>Title</th><td>${data[1]}</td></tr>
+                            <tr><th>First Name</th><td>${data[2]}</td></tr>
+                            <tr><th>Last Name</th><td>${data[3]}</td></tr>
+                            <tr><th>Age</th><td>${data[4]}</td></tr>
+                            <tr><th>Gender</th><td>${data[5]}</td></tr>
+                            <tr><th>Date of Birth</th><td>${data[6]}</td></tr>
+                            <tr><th>Address</th><td>${data[7]}</td></tr>
+                            <tr><th>Email</th><td>${data[8]}</td></tr>
+                            <tr><th>Mobile Number</th><td>${data[9]}</td></tr>
+                            <tr><th>Status</th><td>${data[10]}</td></tr>
+                            <tr><th>Department</th><td>${data[11]}</td></tr>
+                            <tr><th>Relationship Status</th><td>${data[12]}</td></tr>
+                            <tr><th>Employment Status</th><td>${data[13]}</td></tr>
+                            <tr><th>Consent</th><td>${data[14]}</td></tr>
+                        </table>
+                    `;
+                    document.querySelector('input[name="id"]').value = data[0]; // Assuming ID is the first element
+                    document.querySelector('input[name="title"]').value = data[1];
+                    document.querySelector('input[name="first_name"]').value = data[2];
+                    document.querySelector('input[name="last_name"]').value = data[3];
+                    document.querySelector('input[name="age"]').value = data[4];
+                    document.querySelector('input[name="gender"]').value = data[5];
+                    document.querySelector('input[name="DATE_OF_BIRTH"]').value = data[6];
+                    document.querySelector('input[name="ADDRESS"]').value = data[7];
+                    document.querySelector('input[name="EMAIL"]').value = data[8];
+                    document.querySelector('input[name="MOBILE_NUMBER"]').value = data[9];
+                    document.querySelector('input[name="STATUS"]').value = data[10];
+                    document.querySelector('input[name="DEPARTMENT"]').value = data[11];
+                    document.querySelector('input[name="RELATIONSHIP_STATUS"]').value = data[12];
+                    document.querySelector('input[name="EMPLOYMENT_STATUS"]').value = data[13];
+                    document.querySelector('input[name="CONSENT"]').value = data[14];
+                });
+            }
+        };
+    
+    </script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("openModal");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("closeModal");
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }       
+    </script>   
+    <footer>
+        <p>&copy; 2025 AGT Records Management</p>
+    </footer>
+</body>
+</html>
