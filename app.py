@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with your secret key
 
 # Configure your Oracle database connection here
-connection = oracledb.connect(user='C##AGT', password='AGT_137i_church_4f9nyZ', dsn='localhost:1521/orcl')
+connection = oracledb.connect(user='C##AGT', password='AGT_137i_church_4f9nyZ', dsn='192.168.0.185:1521/orcl')
 
 @app.route('/')
 def index():
