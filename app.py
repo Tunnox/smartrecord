@@ -48,7 +48,7 @@ def search():
 @app.route('/get_details', methods=['POST'])
 def get_details():
     full_name = request.json['full_name']
-    first_name, last_name = full_name.split(' ')
+    First_name, Last_name = full_name.split(' ')
     cursor = connection.cursor()
     
     # SQL query to get full details based on first and last name
@@ -57,7 +57,7 @@ def get_details():
         WHERE FIRST_NAME = :first_name AND LAST_NAME = :last_name
     """
     
-    cursor.execute(sql_query, first_name=first_name, last_name=last_name)
+    cursor.execute(sql_query, first_name=First_name, last_name=Last_name)
     details = cursor.fetchone()
     cursor.close()
     
@@ -67,8 +67,8 @@ def get_details():
 def update():
     id = request.form.get('id')
     title = request.form.get('title')
-    first_name = request.form.get('first_name')
-    last_name = request.form.get('last_name')
+    First_name = request.form.get('first_name')
+    Last_name = request.form.get('last_name')
     age = request.form.get('age')
     gender = request.form.get('gender')
     date_of_birth = request.form.get('DATE_OF_BIRTH')
@@ -100,7 +100,7 @@ def update():
             EMPLOYEMENT_status = :employement_status,
             CONSENT = :consent 
         WHERE ID = :id""",
-        {'title': title, 'first_name': first_name, 'last_name': last_name,
+        {'title': title, 'first_name': First_name, 'last_name': Last_name,
          'age': age, 'gender': gender, 'date_of_birth': date_of_birth, 'address': address, 'email': email, 'mobile_number': mobile_number, 'status':status, 'department': department, 'relationship_status': relationship_status, 'employement_status': employement_status, 'consent': consent, 'id': id})
     
     connection.commit()
@@ -163,4 +163,4 @@ def insert():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
