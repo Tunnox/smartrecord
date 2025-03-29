@@ -265,7 +265,7 @@
                                 <th>Relationship Status</th><td>{{ details[12] }}</td>
                             </tr>
                             <tr>
-                                <th>Employment Status</th><td>{{ details[13] }}</td>
+                                <th>Employement Status</th><td>{{ details[13] }}</td>
                             </tr>
                             <tr>
                                 <th>Consent</th><td>{{ details[14] }}</td>
@@ -280,7 +280,7 @@
     <section id="update-tables">
         <h2>Update Records</h2>
         <form action="/update" method="POST">
-            <input type="text" name="id" placeholder="Record ID" required>
+            <!--<input type="text" name="id" placeholder="Record ID" required> -->
             <input type="text" name="title" placeholder="Title">
             <input type="text" name="first_name" placeholder="First Name">
             <input type="text" name="last_name" placeholder="Last Name">
@@ -331,7 +331,7 @@
                             <tr><th>Consent</th><td>${data[14]}</td></tr>
                         </table>
                     `;
-                    document.querySelector('input[name="id"]').value = data[0]; // Assuming ID is the first element
+                    //document.querySelector('input[name="id"]').value = data[0]; // Assuming ID is the first element
                     document.querySelector('input[name="title"]').value = data[1];
                     document.querySelector('input[name="first_name"]').value = data[2];
                     document.querySelector('input[name="last_name"]').value = data[3];
